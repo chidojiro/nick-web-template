@@ -201,7 +201,7 @@ export const signup = params => (dispatch, getState, sdk) => {
   dispatch(signupRequest());
   const { email, password, firstName, lastName, hobbies, ...rest } = params;
 
-  const publicData = { hobbies };
+  const publicData = { ...(hobbies ? { hobbies } : {}) };
   const protectedData = { ...rest };
 
   const createUserParams = {

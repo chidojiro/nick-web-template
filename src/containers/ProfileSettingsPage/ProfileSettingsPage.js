@@ -43,12 +43,14 @@ export const ProfileSettingsPageComponent = props => {
   } = props;
 
   const handleSubmit = values => {
-    const { firstName, lastName, bio: rawBio, hobbies } = values;
+    const { firstName, lastName, bio: rawBio, hobbies: rawHobbies } = values;
+
+    const hobbies = rawHobbies?.trim();
 
     // Ensure that the optional bio is a string
     const bio = rawBio || '';
 
-    const publicData = { hobbies: hobbies?.trim() };
+    const publicData = { ...(hobbies ? { hobbies } : {}) };
 
     const profile = {
       firstName: firstName.trim(),
