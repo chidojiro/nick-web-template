@@ -132,6 +132,20 @@ const SignupFormComponent = props => (
                 )}
               />
             </div>
+
+            <FieldTextInput
+              className={css.hobbies}
+              type="text"
+              id="hobbies"
+              name="hobbies"
+              label={intl.formatMessage({
+                id: 'SignupForm.hobbiesLabel',
+              })}
+              placeholder={intl.formatMessage({
+                id: 'SignupForm.hobbiesPlaceholder',
+              })}
+            />
+
             <FieldTextInput
               className={css.password}
               type="password"

@@ -718,6 +718,8 @@
   "SignupForm.lastNameLabel": "Nom",
   "SignupForm.lastNamePlaceholder": "Doe",
   "SignupForm.lastNameRequired": "Vous devez entrer un nom.",
+  "SignupForm.hobbiesLabel": "Les loisirs",
+  "SignupForm.hobbiesPlaceholder": "programmation",
   "SignupForm.passwordLabel": "Mot de passe",
   "SignupForm.passwordPlaceholder": "Entrez votre mot de passe",
   "SignupForm.passwordRequired": "Vous devez entrer un mot de passe.",

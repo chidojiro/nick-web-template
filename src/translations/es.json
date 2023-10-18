@@ -718,6 +718,8 @@
   "SignupForm.lastNameLabel": "Apellido",
   "SignupForm.lastNamePlaceholder": "Doe",
   "SignupForm.lastNameRequired": "Necesitas añadir to apellido.",
+  "SignupForm.hobbiesLabel": "Aficiones",
+  "SignupForm.hobbiesPlaceholder": "programación",
   "SignupForm.passwordLabel": "Contraseña",
   "SignupForm.passwordPlaceholder": "Introduce tu contraseña…",
   "SignupForm.passwordRequired": "Necesitas añadir una contraseña.",
