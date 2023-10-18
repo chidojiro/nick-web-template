@@ -34,14 +34,22 @@ const MAX_MOBILE_SCREEN_WIDTH = 768;
 
 export const AsideContent = props => {
   const { user, displayName, isCurrentUser } = props;
+  const hobbies = user?.attributes.profile.publicData?.hobbies;
+
   return (
     <div className={css.asideContent}>
       <AvatarLarge className={css.avatar} user={user} disableProfileLink />
-      <H2 as="h1" className={css.mobileHeading}>
-        {displayName ? (
-          <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: displayName }} />
-        ) : null}
-      </H2>
+      {displayName ? (
+        <div className={css.mobileHeadingContainer}>
+          <H2 as="h1" className={css.mobileHeading}>
+            <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: displayName }} />
+          </H2>
+          <FormattedMessage
+            id="ProfilePage.mobileSubheading"
+            values={{ hobbies: hobbies || '--' }}
+          />
+        </div>
+      ) : null}
       {isCurrentUser ? (
         <>
           <NamedLink className={css.editLinkMobile} name="ProfileSettingsPage">
@@ -152,6 +160,7 @@ export const MainContent = props => {
     reviews,
     queryReviewsError,
     viewport,
+    hobbies,
   } = props;
 
   const hasListings = listings.length > 0;
@@ -171,9 +180,16 @@ export const MainContent = props => {
   }
   return (
     <div>
-      <H2 as="h1" className={css.desktopHeading}>
-        <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
-      </H2>
+      <div className={css.desktopHeadingContainer}>
+        <H2 as="h1" className={css.desktopHeading}>
+          <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
+        </H2>
+        <FormattedMessage
+          id="ProfilePage.desktopSubheading"
+          values={{ hobbies: hobbies || '--' }}
+        />
+      </div>
+
       {hasBio ? <p className={css.bio}>{bio}</p> : null}
       {hasListings ? (
         <div className={listingsContainerClasses}>
@@ -205,7 +221,8 @@ const ProfilePageComponent = props => {
   const profileUser = ensureUser(user);
   const isCurrentUser =
     ensuredCurrentUser.id && profileUser.id && ensuredCurrentUser.id.uuid === profileUser.id.uuid;
-  const { bio, displayName } = profileUser?.attributes?.profile || {};
+  const { bio, displayName, publicData } = profileUser?.attributes?.profile || {};
+  const hobbies = publicData?.hobbies;
 
   const schemaTitleVars = { name: displayName, marketplaceName: config.marketplaceName };
   const schemaTitle = intl.formatMessage({ id: 'ProfilePage.schemaTitle' }, schemaTitleVars);
@@ -231,7 +248,13 @@ const ProfilePageComponent = props => {
         }
         footer={<FooterContainer />}
       >
-        <MainContent bio={bio} displayName={displayName} userShowError={userShowError} {...rest} />
+        <MainContent
+          hobbies={hobbies}
+          bio={bio}
+          displayName={displayName}
+          userShowError={userShowError}
+          {...rest}
+        />
       </LayoutSideNavigation>
     </Page>
   );
