@@ -199,9 +199,9 @@ export const signup = params => (dispatch, getState, sdk) => {
     return Promise.reject(new Error('Login or logout already in progress'));
   }
   dispatch(signupRequest());
-  const { email, password, firstName, lastName, hobbies, ...rest } = params;
+  const { email, password, firstName, lastName, hobbies = '', ...rest } = params;
 
-  const publicData = { ...(hobbies ? { hobbies } : {}) };
+  const publicData = { hobbies };
   const protectedData = { ...rest };
 
   const createUserParams = {
@@ -209,7 +209,7 @@ export const signup = params => (dispatch, getState, sdk) => {
     password,
     firstName,
     lastName,
-    ...(!isEmpty(publicData) ? { publicData } : {}),
+    publicData,
     ...(!isEmpty(protectedData) ? { protectedData } : {}),
   };
 

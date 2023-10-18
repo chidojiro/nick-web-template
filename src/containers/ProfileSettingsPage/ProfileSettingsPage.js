@@ -45,22 +45,20 @@ export const ProfileSettingsPageComponent = props => {
   const handleSubmit = values => {
     const { firstName, lastName, bio: rawBio, hobbies: rawHobbies } = values;
 
-    const hobbies = rawHobbies?.trim();
+    const hobbies = rawHobbies?.trim() || '';
 
     // Ensure that the optional bio is a string
     const bio = rawBio || '';
 
-    const publicData = { ...(hobbies ? { hobbies } : {}) };
+    const publicData = { hobbies };
 
     const profile = {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       bio,
-      ...(!isEmpty(publicData) ? { publicData } : {}),
+      publicData,
     };
     const uploadedImage = props.image;
-
-    console.log(profile);
 
     // Update profileImage only if file system has been accessed
     const updatedValues =
