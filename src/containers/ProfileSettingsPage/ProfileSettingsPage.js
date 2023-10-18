@@ -2,6 +2,7 @@ import React from 'react';
 import { bool, func, object, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import { useConfiguration } from '../../context/configurationContext';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
@@ -42,17 +43,22 @@ export const ProfileSettingsPageComponent = props => {
   } = props;
 
   const handleSubmit = values => {
-    const { firstName, lastName, bio: rawBio } = values;
+    const { firstName, lastName, bio: rawBio, hobbies } = values;
 
     // Ensure that the optional bio is a string
     const bio = rawBio || '';
+
+    const publicData = { hobbies: hobbies?.trim() };
 
     const profile = {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       bio,
+      ...(!isEmpty(publicData) ? { publicData } : {}),
     };
     const uploadedImage = props.image;
+
+    console.log(profile);
 
     // Update profileImage only if file system has been accessed
     const updatedValues =
@@ -64,15 +70,16 @@ export const ProfileSettingsPageComponent = props => {
   };
 
   const user = ensureCurrentUser(currentUser);
-  const { firstName, lastName, bio } = user.attributes.profile;
+  const { firstName, lastName, bio, publicData } = user.attributes.profile;
   const profileImageId = user.profileImage ? user.profileImage.id : null;
   const profileImage = image || { imageId: profileImageId };
+  const hobbies = publicData?.hobbies;
 
   const profileSettingsForm = user.id ? (
     <ProfileSettingsForm
       className={css.form}
       currentUser={currentUser}
-      initialValues={{ firstName, lastName, bio, profileImage: user.profileImage }}
+      initialValues={{ firstName, lastName, hobbies, bio, profileImage: user.profileImage }}
       profileImage={profileImage}
       onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
       uploadInProgress={uploadInProgress}

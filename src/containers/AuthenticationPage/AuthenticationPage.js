@@ -175,7 +175,7 @@ export const AuthenticationForms = props => {
     const params = {
       firstName: fname.trim(),
       lastName: lname.trim(),
-      hobbies: hobbies.trim(),
+      hobbies: hobbies?.trim(),
       ...rest,
     };
     submitSignup(params);
