@@ -13,8 +13,6 @@ COPY . .
 
 RUN yarn build
 
-RUN rm -rf node_modules && yarn install --production --frozen-lockfile
-
 EXPOSE 3000
 
 CMD [ "yarn", "start" ]
